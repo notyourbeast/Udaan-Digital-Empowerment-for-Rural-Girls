@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Lady Empowerment Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo">RE</div>
+            <div class="logo-text">RuralEmpowerment</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i>📊</i> <span>Dashboard</span></a></li>
+            <li><a href="learning.html"><i>👩‍🎓</i> <span>Learning</span></a></li>
+            <li><a href="#"><i>📝</i> <span>Skills</span></a></li>
+            <li><a href="#"><i>📁</i> <span>Resources</span></a></li>
+            <li><a href="#"><i>👥</i> <span>Community</span></a></li>
+            <li><a href="#"><i>🏆</i> <span>Achievements</span></a></li>
+            <li><a href="#"><i>⚙️</i> <span>Settings</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="page-title">Rural Lady Empowerment Dashboard</div>
+            <div class="header-actions">
+                <button class="btn btn-primary"><i>✨</i> Explore Opportunities</button>
+                <!-- dark mode -->
+                <!-- <button id="theme-toggle" class="btn-icon" title="Toggle dark mode">🌓</button> -->
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="./my-avatar.png" alt="User Avatar">
+                    </div>
+                    <div class="user-name">Jack</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Overall Progress</div>
+                    <div class="card-actions">
+                        <button class="btn-icon" title="Edit"><i>✏️</i></button>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-bar-fill primary" style="width: 28%"></div>
+                </div>
+                <div class="progress-stats">
+                    <div>28% Complete</div>
+                    <div>36/128</div>
+                </div>
+
+                <div class="progress-grid">
+                    <div class="progress-item">
+                        <div class="progress-item-header">
+                            <div class="progress-category">Basic Skills</div>
+                            <div class="progress-percentage">45%</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill success" style="width: 45%"></div>
+                        </div>
+                        <div class="progress-count">
+                            18/40
+                            <span class="progress-label">completed</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-item-header">
+                            <div class="progress-category">Digital Literacy</div>
+                            <div class="progress-percentage">32%</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill warning" style="width: 32%"></div>
+                        </div>
+                        <div class="progress-count">
+                            12/38
+                            <span class="progress-label">completed</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-item-header">
+                            <div class="progress-category">Entrepreneurship</div>
+                            <div class="progress-percentage">12%</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill primary" style="width: 12%"></div>
+                        </div>
+                        <div class="progress-count">
+                            6/50
+                            <span class="progress-label">completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Skill Profile</div>
+                    <div class="card-actions">
+                        <button class="btn-icon" title="Edit"><i>✏️</i></button>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="donut-chart">
+                        <div class="donut-hole">
+                            <div class="donut-percentage">28%</div>
+                            <div class="donut-label">Overall</div>
+                        </div>
+                        <div class="difficulty-markers">
+                            <div class="difficulty-marker easy"></div>
+                            <div class="difficulty-marker medium"></div>
+                            <div class="difficulty-marker hard"></div>
+                        </div>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="chart-stat-item">
+                            <div class="chart-stat-label">
+                                <div class="chart-stat-marker easy"></div>
+                                Easy
+                            </div>
+                            <div class="chart-stat-value">18/30</div>
+                        </div>
+                        <div class="chart-stat-item">
+                            <div class="chart-stat-label">
+                                <div class="chart-stat-marker medium"></div>
+                                Medium
+                            </div>
+                            <div class="chart-stat-value">12/50</div>
+                        </div>
+                        <div class="chart-stat-item">
+                            <div class="chart-stat-label">
+                                <div class="chart-stat-marker hard"></div>
+                                Advanced
+                            </div>
+                            <div class="chart-stat-value">6/48</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Skill Development</div>
+                    <div class="card-actions">
+                        <button class="btn-icon" title="Filter"><i>🔍</i></button>
+                        <button class="btn-icon" title="More options"><i>•••</i></button>
+                    </div>
+                </div>
+
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <div class="skill-icon">📱</div>
+                        <div class="skill-info">
+                            <div class="skill-name">Smartphone Basics</div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 80%"></div>
+                                </div>
+                                <div class="skill-percentage">80%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">💰</div>
+                        <div class="skill-info">
+                            <div class="skill-name">Financial Literacy</div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 45%"></div>
+                                </div>
+                                <div class="skill-percentage">45%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🧵</div>
+                        <div class="skill-info">
+                            <div class="skill-name">Tailoring & Craft</div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 60%"></div>
+                                </div>
+                                <div class="skill-percentage">60%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🌱</div>
+                        <div class="skill-info">
+                            <div class="skill-name">Sustainable Agriculture</div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 20%"></div>
+                                </div>
+                                <div class="skill-percentage">20%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">💻</div>
+                        <div class="skill-info">
+                            <div class="skill-name">Basic Computer Skills</div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar">
+                                    <div class="skill-progress-fill" style="width: 35%"></div>
+                                </div>
+                                <div class="skill-percentage">35%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Learning Progress</div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" id="add-new-btn"><i>➕</i> Add New</button>
+                    </div>
+                </div>
+
+                <div class="tab-navigation">
+                    <button class="tab-btn" data-tab="lectures">Lectures</button>
+                    <button class="tab-btn active" data-tab="todos">To-Do List</button>
+                </div>
+
+                <div class="tab-content" id="lectures">
+                    <div class="lecture-list">
+                        <div class="lecture-item">
+                            <div class="lecture-status">
+                                <div class="lecture-status-icon completed">✓</div>
+                            </div>
+                            <div class="lecture-content">
+                                <div class="lecture-title">Introduction to Smartphone Usage</div>
+                                <div class="lecture-meta">
+                                    <div><i>⏱️</i> 45 min</div>
+                                    <div><i>📊</i> Beginner</div>
+                                    <div class="tag tag-success">Completed</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-status">
+                                <div class="lecture-status-icon completed">✓</div>
+                            </div>
+                            <div class="lecture-content">
+                                <div class="lecture-title">Mobile Banking Basics</div>
+                                <div class="lecture-meta">
+                                    <div><i>⏱️</i> 60 min</div>
+                                    <div><i>📊</i> Intermediate</div>
+                                    <div class="tag tag-success">Completed</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-status">
+                                <div class="lecture-status-icon pending">•</div>
+                            </div>
+                            <div class="lecture-content">
+                                <div class="lecture-title">Financial Planning for Small Businesses</div>
+                                <div class="lecture-meta">
+                                    <div><i>⏱️</i> 90 min</div>
+                                    <div><i>📊</i> Advanced</div>
+                                    <div class="tag tag-warning">In Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="todos">
+                    <div class="add-todo-form">
+                        <input type="text" class="form-input" placeholder="Add a new task...">
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                    <div class="todo-list">
+                        <div class="todo-item">
+                            <input type="checkbox" class="todo-check" id="todo1">
+                            <div class="todo-content">
+                                <label for="todo1" class="todo-title">Complete Digital Marketing module</label>
+                                <div class="todo-meta">
+                                    <div><i>📅</i> Due Tomorrow</div>
+                                    <div><i>🏷️</i> Digital Skills</div>
+                                </div>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn-icon"><i>✏️</i></button>
+                                <button class="btn-icon"><i>🗑️</i></button>
+                            </div>
+                        </div>
+                        <div class="todo-item">
+                            <input type="checkbox" class="todo-check" id="todo2" checked>
+                            <div class="todo-content">
+                                <label for="todo2" class="todo-title completed">Watch smartphone tutorial video</label>
+                                <div class="todo-meta">
+                                    <div><i>✅</i> Completed</div>
+                                    <div><i>🏷️</i> Basics</div>
+                                </div>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn-icon"><i>✏️</i></button>
+                                <button class="btn-icon"><i>🗑️</i></button>
+                            </div>
+                        </div>
+                        <div class="todo-item">
+                            <input type="checkbox" class="todo-check" id="todo3">
+                            <div class="todo-content">
+                                <label for="todo3" class="todo-title">Create a business plan draft</label>
+                                <div class="todo-meta">
+                                    <div><i>📅</i> Due in 3 days</div>
+                                    <div><i>🏷️</i> Entrepreneurship</div>
+                                </div>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn-icon"><i>✏️</i></button>
+                                <button class="btn-icon"><i>🗑️</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="add-task-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add New Task</div>
+                <div class="close-modal">&times;</div>
+            </div>
+            <div class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Task Title</label>
+                    <input type="text" class="form-input" placeholder="Enter task title">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select">
+                        <option>Digital Skills</option>
+                        <option>Entrepreneurship</option>
+                        <option>Financial Literacy</option>
+                        <option>Craft & Agriculture</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="date" class="form-input">
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-secondary close-modal-btn">Cancel</button>
+                    <button class="btn btn-primary">Add Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

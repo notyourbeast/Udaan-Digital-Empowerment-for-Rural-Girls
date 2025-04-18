@@ -28,7 +28,7 @@
             duration: "4 weeks",
             students: 1200,
             rating: 4.8,
-            youtubeId: "RIXxt21mohQ",
+            youtubeId: "pAsmrKyMqaA",
             link: "vid1.html"
           },
           {
@@ -38,7 +38,7 @@
             duration: "3 weeks",
             students: 950,
             rating: 4.6,
-            youtubeId: "-FrvnEFISWY",
+            youtubeId: "RIXxt21mohQ",
             link: "vid2.html"
           }
           // Add more courses with their respective links
@@ -107,32 +107,7 @@
                   </div>
                   <button
                     type="button"
-                    onClick={() => window.location.href = 'coursecontent.html'}
-                    className="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-                  >
-                    Enroll
-                  </button>
-
-                </div>
-              ))}
-
-              {filteredCourses.map(course => (
-                <div key={course.id} className="bg-gray-800 rounded-lg p-4 flex flex-col justify-between">
-                  <div>
-                    <img
-                      className="w-full h-40 aspect-video mb-2 object-cover rounded"
-                      src={`https://img.youtube.com/vi/${course.youtubeId}/hqdefault.jpg`}
-                      alt={course.title}
-                    />
-                    <h2 className="text-xl font-semibold">{course.title}</h2>
-                    <p>{course.description}</p>
-                    <p className="text-sm text-gray-400">
-                      Rating: {course.rating} | Students: {course.students}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => window.location.href = '/vid/vid2.html'}
+                    onClick={() => window.location.href = `/vid/${course.link}`}
                     className="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded"
                   >
                     Enroll
