@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmpowerHer - Seller Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF69B4',
+            secondary: '#FFA500'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="dark bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen">
+  <header class="bg-gray-900 border-b border-gray-700 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
+      <h1 class="text-2xl font-bold text-pink-400">Empower<span class="text-orange-400">Her</span> Seller Dashboard</h1>
+      <div class="flex gap-4">
+        <a href="index.html" class="text-sm text-pink-400 hover:underline">View Store</a>
+        <button id="logout-btn" class="text-sm text-pink-400 hover:underline">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-10 px-4">
+    <!-- Profile Section -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4 text-pink-300">Your Profile</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-lg font-medium text-gray-300">Business Information</h3>
+          <div class="mt-4 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-400">Business Type</label>
+              <p class="mt-1 text-gray-200" id="business-type">Loading...</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400">Village</label>
+              <p class="mt-1 text-gray-200" id="village">Loading...</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400">Phone</label>
+              <p class="mt-1 text-gray-200" id="phone">Loading...</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-300">Business Description</h3>
+          <p class="mt-4 text-gray-200" id="description">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-gray-800 p-6 rounded-xl shadow">
+        <h3 class="text-lg font-semibold text-pink-300">Total Views</h3>
+        <p class="text-3xl font-bold mt-2" id="total-views">0</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-xl shadow">
+        <h3 class="text-lg font-semibold text-pink-300">Total Orders</h3>
+        <p class="text-3xl font-bold mt-2" id="total-orders">0</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-xl shadow">
+        <h3 class="text-lg font-semibold text-pink-300">Total Products</h3>
+        <p class="text-3xl font-bold mt-2" id="total-products">0</p>
+      </div>
+    </div>
+
+    <!-- Product Management -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow mb-10">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-pink-300">Your Products</h2>
+        <button id="add-product-btn" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md">
+          <i class="fas fa-plus mr-2"></i>Add New Product
+        </button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="text-left border-b border-gray-700">
+              <th class="pb-4">Product</th>
+              <th class="pb-4">Price</th>
+              <th class="pb-4">Category</th>
+              <th class="pb-4">Stock</th>
+              <th class="pb-4">Status</th>
+              <th class="pb-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-table">
+            <!-- Products will be listed here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+      <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold text-pink-300" id="modal-title">Add New Product</h3>
+          <button id="close-modal" class="text-gray-400 hover:text-gray-300">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="product-form" class="space-y-6">
+          <input type="hidden" id="product-id">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="product-name" class="block text-sm font-medium text-gray-300">Product Name</label>
+              <input type="text" id="product-name" required class="mt-1 w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500">
+            </div>
+            <div>
+              <label for="product-price" class="block text-sm font-medium text-gray-300">Price ($)</label>
+              <input type="number" id="product-price" step="0.01" required class="mt-1 w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500">
+            </div>
+            <div>
+              <label for="product-category" class="block text-sm font-medium text-gray-300">Category</label>
+              <select id="product-category" required class="mt-1 w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500">
+                <option value="">Select Category</option>
+                <option value="handicrafts">Handicrafts</option>
+                <option value="textiles">Textiles</option>
+                <option value="food">Food Products</option>
+                <option value="jewelry">Jewelry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="product-stock" class="block text-sm font-medium text-gray-300">Stock Quantity</label>
+              <input type="number" id="product-stock" required class="mt-1 w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500">
+            </div>
+          </div>
+          <div>
+            <label for="product-description" class="block text-sm font-medium text-gray-300">Description</label>
+            <textarea id="product-description" rows="4" required class="mt-1 w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500"></textarea>
+          </div>
+          <div>
+            <label for="product-image" class="block text-sm font-medium text-gray-300">Product Image</label>
+            <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-700 border-dashed rounded-md" id="drop-zone">
+              <div class="space-y-1 text-center">
+                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                <div class="flex text-sm text-gray-400">
+                  <label for="product-image" class="relative cursor-pointer bg-gray-800 rounded-md font-medium text-pink-400 hover:text-pink-300 focus-within:outline-none">
+                    <span>Upload an image</span>
+                    <input type="file" id="product-image" accept="image/*" class="sr-only">
+                  </label>
+                  <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+              </div>
+            </div>
+            <div id="image-preview" class="mt-2 hidden">
+              <img src="" alt="Preview" class="w-32 h-32 object-cover rounded-md">
+            </div>
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button type="button" id="cancel-product" class="px-4 py-2 border border-gray-700 text-gray-300 rounded-md hover:bg-gray-700">
+              Cancel
+            </button>
+            <button type="submit" class="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600">
+              Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Shopping Cart -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-6 text-pink-300">Your Shopping Cart</h2>
+      <div id="cart-items" class="space-y-4">
+        <!-- Cart items will be listed here -->
+      </div>
+      <div class="mt-6 flex justify-between items-center">
+        <span class="text-lg font-semibold">Total: $<span id="cart-total">0.00</span></span>
+        <button id="checkout-btn" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-md">
+          Checkout
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 border-t border-gray-700 mt-10 py-6 text-center text-xs text-gray-500">
+    &copy; 2025 EmpowerHer. Empowering rural girls through innovation.
+  </footer>
+
+  <script>
+    // Check if user is logged in and is a seller
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser || !currentUser.isSeller) {
+      window.location.href = 'login.html';
+    }
+
+    // Load profile data
+    function loadProfile() {
+      document.getElementById('business-type').textContent = currentUser.business_type;
+      document.getElementById('village').textContent = currentUser.village;
+      document.getElementById('phone').textContent = currentUser.phone;
+      document.getElementById('description').textContent = currentUser.description;
+      document.getElementById('total-views').textContent = currentUser.views || 0;
+      document.getElementById('total-orders').textContent = currentUser.orders || 0;
+      document.getElementById('total-products').textContent = currentUser.products?.length || 0;
+    }
+
+    // Load products
+    function loadProducts() {
+      const productsTable = document.getElementById('products-table');
+      productsTable.innerHTML = '';
+      
+      currentUser.products?.forEach(product => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-gray-700';
+        row.innerHTML = `
+          <td class="py-4">
+            <div class="flex items-center">
+              <img src="${product.image || 'default-product.jpg'}" alt="${product.name}" class="w-12 h-12 rounded-md object-cover">
+              <div class="ml-3">
+                <div class="font-medium">${product.name}</div>
+                <div class="text-sm text-gray-400">${product.description.substring(0, 50)}...</div>
+              </div>
+            </div>
+          </td>
+          <td class="py-4">$${product.price.toFixed(2)}</td>
+          <td class="py-4">${product.category}</td>
+          <td class="py-4">${product.stock}</td>
+          <td class="py-4">
+            <span class="px-2 py-1 rounded-full text-xs ${product.status === 'active' ? 'bg-green-500' : 'bg-red-500'}">
+              ${product.status}
+            </span>
+          </td>
+          <td class="py-4">
+            <button onclick="openProductModal(${JSON.stringify(product)})" class="text-pink-400 hover:text-pink-300 mr-2">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="deleteProduct('${product.id}')" class="text-red-400 hover:text-red-300">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        productsTable.appendChild(row);
+      });
+    }
+
+    // Load cart
+    function loadCart() {
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      
+      let total = 0;
+      currentUser.cart?.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'flex items-center justify-between p-4 bg-gray-700 rounded-lg';
+        cartItem.innerHTML = `
+          <div class="flex items-center">
+            <img src="${item.image || 'default-product.jpg'}" alt="${item.name}" class="w-16 h-16 rounded-md object-cover">
+            <div class="ml-4">
+              <h4 class="text-lg font-medium">${item.name}</h4>
+              <p class="text-gray-400">$${item.price} x ${item.quantity}</p>
+            </div>
+          </div>
+          <button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-300">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        cartItems.appendChild(cartItem);
+        total += item.price * item.quantity;
+      });
+      
+      document.getElementById('cart-total').textContent = total.toFixed(2);
+    }
+
+    // Handle logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    // Product Management Functions
+    function openProductModal(product = null) {
+      const modal = document.getElementById('product-modal');
+      const title = document.getElementById('modal-title');
+      const form = document.getElementById('product-form');
+      
+      if (product) {
+        title.textContent = 'Edit Product';
+        document.getElementById('product-id').value = product.id;
+        document.getElementById('product-name').value = product.name;
+        document.getElementById('product-price').value = product.price;
+        document.getElementById('product-category').value = product.category;
+        document.getElementById('product-stock').value = product.stock;
+        document.getElementById('product-description').value = product.description;
+        
+        const imagePreview = document.getElementById('image-preview');
+        if (product.image) {
+          imagePreview.classList.remove('hidden');
+          imagePreview.querySelector('img').src = product.image;
+        }
+      } else {
+        title.textContent = 'Add New Product';
+        form.reset();
+        document.getElementById('image-preview').classList.add('hidden');
+      }
+      
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProductModal() {
+      const modal = document.getElementById('product-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.getElementById('product-form').reset();
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      
+      const productId = document.getElementById('product-id').value;
+      const name = document.getElementById('product-name').value;
+      const price = parseFloat(document.getElementById('product-price').value);
+      const category = document.getElementById('product-category').value;
+      const stock = parseInt(document.getElementById('product-stock').value);
+      const description = document.getElementById('product-description').value;
+      const imageFile = document.getElementById('product-image').files[0];
+      
+      const product = {
+        id: productId || Date.now().toString(),
+        name,
+        price,
+        category,
+        stock,
+        description,
+        status: 'active',
+        created_at: new Date().toISOString()
+      };
+
+      if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          product.image = e.target.result;
+          updateProductList(product);
+        };
+        reader.readAsDataURL(imageFile);
+      } else {
+        updateProductList(product);
+      }
+    }
+
+    function updateProductList(product) {
+      const users = JSON.parse(localStorage.getItem('users'));
+      const currentUserIndex = users.findIndex(u => u.email === currentUser.email);
+      
+      if (!users[currentUserIndex].products) {
+        users[currentUserIndex].products = [];
+      }
+      
+      const productIndex = users[currentUserIndex].products.findIndex(p => p.id === product.id);
+      
+      if (productIndex === -1) {
+        users[currentUserIndex].products.push(product);
+      } else {
+        users[currentUserIndex].products[productIndex] = product;
+      }
+      
+      localStorage.setItem('users', JSON.stringify(users));
+      currentUser.products = users[currentUserIndex].products;
+      sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+      
+      loadProducts();
+      closeProductModal();
+    }
+
+    function deleteProduct(productId) {
+      if (confirm('Are you sure you want to delete this product?')) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        const currentUserIndex = users.findIndex(u => u.email === currentUser.email);
+        
+        users[currentUserIndex].products = users[currentUserIndex].products.filter(p => p.id !== productId);
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        currentUser.products = users[currentUserIndex].products;
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        loadProducts();
+      }
+    }
+
+    // Event Listeners
+    document.getElementById('add-product-btn').addEventListener('click', () => openProductModal());
+    document.getElementById('close-modal').addEventListener('click', closeProductModal);
+    document.getElementById('cancel-product').addEventListener('click', closeProductModal);
+    document.getElementById('product-form').addEventListener('submit', saveProduct);
+
+    // Add drag and drop functionality
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('product-image');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+      dropZone.classList.add('border-pink-500');
+    }
+
+    function unhighlight(e) {
+      dropZone.classList.remove('border-pink-500');
+    }
+
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      fileInput.files = files;
+      handleFiles(files);
+    }
+
+    function handleFiles(files) {
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const preview = document.getElementById('image-preview');
+            preview.classList.remove('hidden');
+            preview.querySelector('img').src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert('Please upload an image file');
+        }
+      }
+    }
+
+    // Update file input handler
+    fileInput.addEventListener('change', function(e) {
+      handleFiles(this.files);
+    });
+
+    // Initialize the page
+    loadProfile();
+    loadProducts();
+    loadCart();
+  </script>
+</body>
+</html> 

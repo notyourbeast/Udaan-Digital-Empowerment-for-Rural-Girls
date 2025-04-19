@@ -1,0 +1,531 @@
+<!-- store_public_view.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmpowerHer Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF69B4',
+            secondary: '#FFA500'
+          },
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="dark bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen">
+  <header class="bg-gray-900 border-b border-gray-700 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
+      <h1 class="text-2xl font-bold text-pink-400">Empower<span class="text-orange-400">Her</span> Store</h1>
+      <div class="flex gap-4 items-center">
+        <a href="cart.html" class="relative">
+          <i class="fas fa-shopping-cart text-xl text-pink-400"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </a>
+        <button id="logout-btn" class="text-sm text-pink-400 hover:underline">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-10 px-4">
+    <!-- Search and Filter -->
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1">
+          <input type="text" id="search-input" placeholder="Search products..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:border-pink-500">
+        </div>
+        <div class="w-full md:w-48">
+          <select id="category-filter" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:border-pink-500">
+            <option value="">All Categories</option>
+            <option value="handicrafts">Handicrafts</option>
+            <option value="textiles">Textiles</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="food">Food Products</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Products will be loaded here -->
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold text-pink-400" id="modal-title"></h3>
+          <button onclick="closeProductModal()" class="text-gray-400 hover:text-pink-400">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <img id="modal-image" src="" alt="Product" class="w-full h-64 object-cover">
+          </div>
+          <div class="space-y-4">
+            <h4 id="modal-name" class="text-2xl font-bold text-white"></h4>
+            <p id="modal-seller" class="text-gray-400"></p>
+            <p id="modal-price" class="text-pink-400 text-xl font-bold"></p>
+            <p id="modal-description" class="text-gray-300"></p>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Quantity</label>
+                <input type="number" id="modal-quantity" min="1" value="1" 
+                       class="w-24 px-3 py-2 bg-gray-800 border border-gray-700 text-white rounded-md 
+                              focus:outline-none focus:ring-2 focus:ring-pink-500">
+              </div>
+              <button onclick="addToCartFromModal()" 
+                      class="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md 
+                             transform transition-all duration-200 hover:scale-105">
+                Add to Cart
+              </button>
+              <button id="modal-contact" 
+                      class="w-full border border-pink-500 text-pink-400 hover:bg-pink-500 hover:text-white 
+                             px-4 py-2 rounded-md transition-colors duration-200">
+                Contact Seller
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Seller Modal -->
+    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold text-pink-300">Contact Seller</h3>
+          <button id="close-contact-modal" class="text-gray-400 hover:text-gray-300">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Your Message</label>
+            <textarea id="message" rows="4" class="w-full px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-pink-500 focus:border-pink-500"></textarea>
+          </div>
+          <button id="send-message" class="w-full bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md">
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 border-t border-gray-700 mt-10 py-6 text-center text-xs text-gray-500">
+    &copy; 2025 EmpowerHer. Empowering rural girls through innovation.
+  </footer>
+
+  <script>
+    // Check if user is logged in
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+      window.location.href = 'login.html';
+    }
+    console.log('Current user:', currentUser);
+
+    // Initialize cart count
+    function updateCartCount() {
+      const cartCount = document.getElementById('cart-count');
+      const count = currentUser.cart ? currentUser.cart.reduce((total, item) => total + item.quantity, 0) : 0;
+      cartCount.textContent = count;
+      cartCount.classList.toggle('hidden', count === 0);
+    }
+
+    // Load products
+    function loadProducts() {
+      console.log('Loading products from store page...');
+      const productsGrid = document.getElementById('products-grid');
+      productsGrid.innerHTML = '';
+
+      try {
+        // Get fresh data from localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        console.log('All users in storage:', users);
+        
+        // Find entrepreneurs with products
+        const entrepreneurs = users.filter(user => 
+          (user.isEntrepreneur === true || (user.products && user.products.length > 0)) &&
+          user.products && user.products.length > 0
+        );
+        console.log('Found entrepreneurs with products:', entrepreneurs);
+        
+        let allProducts = [];
+        entrepreneurs.forEach(entrepreneur => {
+          if (!entrepreneur.products) return;
+          
+          entrepreneur.products.forEach(product => {
+            if (!product || !product.name || !product.price) return;
+            
+            allProducts.push({
+              ...product,
+              sellerName: entrepreneur.name || entrepreneur.email,
+              sellerEmail: entrepreneur.email
+            });
+          });
+        });
+
+        console.log('All available products:', allProducts);
+
+        if (allProducts.length === 0) {
+          productsGrid.innerHTML = `
+            <div class="col-span-full text-center py-8">
+              <p class="text-gray-400">No products available yet.</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Apply search filter if search input has value
+        const searchInput = document.getElementById('search-input');
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        if (searchTerm) {
+          allProducts = allProducts.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        // Apply category filter if selected
+        const categorySelect = document.getElementById('category-filter');
+        const selectedCategory = categorySelect.value;
+        if (selectedCategory && selectedCategory !== 'all') {
+          allProducts = allProducts.filter(product => 
+            product.category.toLowerCase() === selectedCategory.toLowerCase()
+          );
+        }
+
+        // Display products
+        allProducts.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.className = 'bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105';
+          
+          const imageUrl = product.image && product.image.startsWith('data:') ? product.image : 'default-product.jpg';
+          
+          productCard.innerHTML = `
+            <div class="relative">
+              <img src="${imageUrl}" 
+                   alt="${product.name}" 
+                   class="w-full h-48 object-cover"
+                   onerror="this.src='default-product.jpg'">
+              <div class="absolute top-2 right-2">
+                <span class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm">
+                  ₹${parseFloat(product.price).toFixed(2)}
+                </span>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-lg font-semibold text-white mb-1 line-clamp-1">${product.name}</h3>
+              <p class="text-gray-400 text-sm mb-2 flex items-center gap-1">
+                <i class="fas fa-store text-xs"></i>
+                <span class="line-clamp-1">${product.sellerName}</span>
+              </p>
+              <p class="text-gray-300 text-sm mb-3 line-clamp-2 min-h-[2.5rem]">
+                ${product.description || 'No description available'}
+              </p>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs px-2 py-1 bg-gray-700 rounded-full text-gray-300">
+                  ${product.category || 'Uncategorized'}
+                </span>
+                ${product.stock ? `
+                  <span class="text-xs px-2 py-1 bg-green-900 rounded-full text-green-300">
+                    In Stock
+                  </span>
+                ` : `
+                  <span class="text-xs px-2 py-1 bg-red-900 rounded-full text-red-300">
+                    Out of Stock
+                  </span>
+                `}
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="showProductDetails('${product.id}')" 
+                        class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-2 rounded-md transition-colors text-sm flex items-center justify-center">
+                  <i class="fas fa-eye mr-1"></i> Details
+                </button>
+                <button onclick="addToCart('${product.id}')" 
+                        class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md transition-colors text-sm flex items-center justify-center">
+                  <i class="fas fa-cart-plus mr-1"></i> Add
+                </button>
+              </div>
+            </div>
+          `;
+          
+          productsGrid.appendChild(productCard);
+        });
+      } catch (error) {
+        console.error('Error loading products:', error);
+        productsGrid.innerHTML = `
+          <div class="col-span-full text-center py-8">
+            <p class="text-red-500">Error loading products. Please try refreshing the page.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Show product details
+    function showProductDetails(productId) {
+      console.log('Showing product details for:', productId);
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      // Find all users with products (entrepreneurs)
+      const entrepreneurs = users.filter(user => 
+        user.isEntrepreneur === true || (user.products && user.products.length > 0)
+      );
+      console.log('Found entrepreneurs:', entrepreneurs);
+      
+      let product = null;
+      let seller = null;
+      
+      // Search for the product across all entrepreneurs
+      for (const entrepreneur of entrepreneurs) {
+        if (entrepreneur.products) {
+          const foundProduct = entrepreneur.products.find(p => p.id === productId);
+          if (foundProduct) {
+            product = foundProduct;
+            seller = entrepreneur;
+            console.log('Found product:', product);
+            console.log('Found seller:', seller);
+            break;
+          }
+        }
+      }
+
+      if (!product || !seller) {
+        console.error('Product or seller not found for ID:', productId);
+        alert('Product not found');
+        return;
+      }
+
+      const modal = document.getElementById('product-modal');
+      const modalContent = document.getElementById('modal-content');
+      
+      // Update modal content with product details
+      document.getElementById('modal-title').textContent = product.name;
+      document.getElementById('modal-name').textContent = product.name;
+      document.getElementById('modal-seller').textContent = `Seller: ${seller.name || seller.email}`;
+      document.getElementById('modal-price').textContent = `₹${parseFloat(product.price).toFixed(2)}`;
+      document.getElementById('modal-description').textContent = product.description || 'No description available';
+      
+      // Handle image with fallback
+      const imageUrl = product.image && product.image.startsWith('data:') ? product.image : 'default-product.jpg';
+      document.getElementById('modal-image').src = imageUrl;
+      document.getElementById('modal-image').onerror = function() {
+        this.src = 'default-product.jpg';
+      };
+      
+      // Store product data for add to cart
+      modalContent.dataset.productId = product.id;
+      
+      // Update contact seller button
+      const contactBtn = document.getElementById('modal-contact');
+      contactBtn.onclick = () => contactSeller(seller.email);
+      
+      // Show modal with animation
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    // Close product modal
+    function closeProductModal() {
+      const modal = document.getElementById('product-modal');
+      const modalContent = document.getElementById('modal-content');
+      
+      modalContent.classList.remove('scale-100', 'opacity-100');
+      modalContent.classList.add('scale-95', 'opacity-0');
+      
+      setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    // Add to cart from modal
+    function addToCartFromModal() {
+      const modalContent = document.getElementById('modal-content');
+      const productId = modalContent.dataset.productId;
+      const quantity = parseInt(document.getElementById('modal-quantity').value) || 1;
+      
+      console.log('Adding to cart from modal:', productId, 'Quantity:', quantity);
+      
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const entrepreneurs = users.filter(user => user.isEntrepreneur);
+      
+      let product = null;
+      let sellerName = '';
+      
+      for (const entrepreneur of entrepreneurs) {
+        if (entrepreneur.products) {
+          const foundProduct = entrepreneur.products.find(p => p.id === productId);
+          if (foundProduct) {
+            product = foundProduct;
+            sellerName = entrepreneur.name;
+            break;
+          }
+        }
+      }
+
+      if (!product) {
+        alert('Product not found');
+        return;
+      }
+
+      if (!currentUser.cart) {
+        currentUser.cart = [];
+      }
+
+      const existingItem = currentUser.cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        currentUser.cart.push({
+          ...product,
+          quantity,
+          sellerName
+        });
+      }
+
+      // Update storage
+      const userIndex = users.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        users[userIndex].cart = currentUser.cart;
+        localStorage.setItem('users', JSON.stringify(users));
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+      }
+
+      updateCartCount();
+      closeProductModal();
+      alert('Product added to cart!');
+    }
+
+    // Handle click outside modal to close
+    document.getElementById('product-modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('product-modal')) {
+        closeProductModal();
+      }
+    });
+
+    // Handle search and filter
+    document.getElementById('search-input').addEventListener('input', loadProducts);
+    document.getElementById('category-filter').addEventListener('change', loadProducts);
+
+    // Handle logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    // Contact seller
+    function contactSeller(sellerEmail) {
+      if (!sellerEmail) {
+        alert('Seller contact information not available');
+        return;
+      }
+      window.location.href = `mailto:${sellerEmail}`;
+    }
+
+    // Add to cart
+    function addToCart(productId) {
+      console.log('Adding to cart:', productId);
+      
+      try {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        let product = null;
+        let seller = null;
+
+        // Find the product and seller
+        for (const user of users) {
+          if (user.products) {
+            const foundProduct = user.products.find(p => p.id === productId);
+            if (foundProduct) {
+              product = foundProduct;
+              seller = user;
+              break;
+            }
+          }
+        }
+
+        if (!product || !seller) {
+          console.error('Product or seller not found');
+          alert('Product not found');
+          return;
+        }
+
+        // Initialize cart if needed
+        if (!currentUser.cart) {
+          currentUser.cart = [];
+        }
+
+        // Check if product already in cart
+        const existingItem = currentUser.cart.find(item => item.id === productId);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          currentUser.cart.push({
+            id: product.id,
+            name: product.name,
+            price: parseFloat(product.price),
+            image: product.image,
+            quantity: 1,
+            sellerName: seller.name || seller.email,
+            sellerEmail: seller.email
+          });
+        }
+
+        // Update storage
+        const userIndex = users.findIndex(u => u.email === currentUser.email);
+        if (userIndex !== -1) {
+          users[userIndex].cart = currentUser.cart;
+          localStorage.setItem('users', JSON.stringify(users));
+          sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+          
+          console.log('Cart updated:', currentUser.cart);
+          updateCartCount();
+          alert('Product added to cart!');
+        } else {
+          throw new Error('User not found in storage');
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('Error adding product to cart. Please try again.');
+      }
+    }
+
+    // Initialize the page
+    console.log('Initializing store page...');
+    console.log('Current user:', currentUser);
+    updateCartCount();
+    loadProducts();
+
+    // Add event listeners for search and filter
+    document.getElementById('search-input').addEventListener('input', loadProducts);
+    document.getElementById('category-filter').addEventListener('change', loadProducts);
+  </script>
+</body>
+</html>
