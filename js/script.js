@@ -232,3 +232,29 @@ document.addEventListener('DOMContentLoaded', function () {
 function lock(){
     alert("Access Blockedd until register and Login");
 }
+localStorage.setItem('userLoggedIn', 'true');
+
+function logout() {
+    // Clear the login state
+    localStorage.removeItem('userLoggedIn');
+
+    // Use history.replaceState to prevent going back
+    history.replaceState(null, '', 'index.html');
+    
+    // Redirect to index.html
+    window.location.href = 'index.html';
+}
+
+
+// When page is loaded, check if the user is logged in
+window.onload = function() {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+
+    // If not logged in, redirect to index or login page
+    if (!userLoggedIn && window.location.pathname !== '/index.html') {
+        // Prevent backtracking if user tries to go to the dashboard without being logged in
+        window.location.href = 'index.html';
+    }
+};
+
+

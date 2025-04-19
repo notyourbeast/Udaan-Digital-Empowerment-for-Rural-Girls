@@ -5,24 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rural Girls Empowerment</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Smooth custom animation on open */
+    .menu-open {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+    .menu-closed {
+      transform: translateX(100%) scale(0.95);
+      opacity: 0;
+    }
+    .menu-transition {
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+  </style>
 </head>
 <body class="bg-black text-white font-sans">
 
   <!-- Navbar -->
-  <nav class="flex items-center justify-between px-6 py-3 bg-[#1A1A2D] shadow-md sticky top-0 z-10">
-    <!-- Logo -->
-    <div class="flex items-center">
-      <img src="/img/Udaan_logo__1_-removebg-preview.png"
-           alt="RuralGirls Logo"
-           class="h-24 w-auto hover:scale-110 transition-transform duration-300 drop-shadow-lg" />
+  <nav class="px-6 py-3 bg-[#1A1A2D] shadow-md sticky top-0 z-10">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <img src="/img/Udaan_logo__1_-removebg-preview.png"
+             alt="RuralGirls Logo"
+             class="h-20 w-auto hover:scale-110 transition-transform duration-300 drop-shadow-lg" />
+      </div>
+
+      <!-- Hamburger Icon -->
+      <div class="md:hidden">
+        <button id="menu-toggle" class="text-purple-300 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-6 text-lg font-semibold text-purple-200">
+        <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+        <li><a onclick="lock()" class="hover:text-pink-400 transition cursor-pointer">Dashboard</a></li>
+        <li><a href="signup.html" class="hover:text-pink-400 transition">Get-Started</a></li>
+      </ul>
     </div>
 
-    <!-- Navigation Links -->
-    <ul class="flex space-x-6 text-lg font-semibold text-purple-200">
-      <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
-      <li><a onclick="lock()" class="hover:text-pink-400 transition cursor-pointer">Dashboard</a></li>
-      <li><a href="signup.html" class="hover:text-pink-400 transition">Get-Started</a></li>
-    </ul>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+         class="fixed top-20 right-0 w-3/4 max-w-xs bg-[#1A1A2D] text-purple-200 text-lg shadow-lg rounded-l-xl
+                flex flex-col space-y-4 p-6 md:hidden border-20 transform menu-closed menu-transition z-50 h-40">
+      <a href="index.html" class="hover:text-pink-400">Home</a>
+      <a onclick="lock()" class="hover:text-pink-400 cursor-pointer">Dashboard</a>
+      <a href="signup.html" class="hover:text-pink-400">Get-Started</a>
+    </div>
   </nav>
 
   <!-- Hero Section -->
@@ -41,6 +77,32 @@
     </div>
   </section>
 
+  <!-- Script -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let isMenuOpen = false;
+
+    toggleBtn.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      if (isMenuOpen) {
+        mobileMenu.classList.remove('menu-closed');
+        mobileMenu.classList.add('menu-open');
+      } else {
+        mobileMenu.classList.remove('menu-open');
+        mobileMenu.classList.add('menu-closed');
+      }
+    });
+
+    // Optional: hide menu on desktop resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        mobileMenu.classList.add('menu-closed');
+        mobileMenu.classList.remove('menu-open');
+        isMenuOpen = false;
+      }
+    });
+  </script>
   <script src="/js/script.js"></script>
 </body>
 </html>

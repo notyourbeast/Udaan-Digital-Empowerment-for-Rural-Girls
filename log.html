@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Rural Girls Empowerment</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"></script>
+    <script type="module" src="/js/login.js" defer></script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #000, #1a1a1a);
+        color: white;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center justify-start">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-6 py-3 bg-[#1A1A2D] shadow-md w-full">
+      <div class="flex items-center">
+        <img
+          src="/img/Udaan_logo__1_-removebg-preview.png"
+          alt="RuralGirls Logo"
+          class="h-24 w-auto hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+        />
+      </div>
+      <ul class="flex space-x-6 text-lg font-semibold text-purple-200">
+        <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+        <li><a onclick="lock()" class="hover:text-pink-400 transition">Dashboard</a></li>
+        <li><a href="signup.html" class="hover:text-pink-400 transition">Get-Started</a></li>
+      </ul>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="flex flex-col items-center justify-center w-full h-full px-4 mt-20">
+      <form id="loginForm" class="glass p-8 rounded-xl w-full max-w-md space-y-6">
+        <h2 class="text-3xl font-extrabold text-center text-white">Login</h2>
+
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Email"
+          required
+          class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+          required
+          class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+
+        <button
+          type="submit"
+          class="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold hover:opacity-90 transition"
+        >
+          Login
+        </button>
+
+        <p class="text-sm text-center text-purple-200">
+          Don’t have an account?
+          <a href="sign.html" class="text-pink-400 hover:underline">Sign Up</a>
+        </p>
+      </form>
+    </div>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBPFb8uxZ2mLyVmv2d8JFPcmyBChc9LjkE",
+        authDomain: "women-empwr.firebaseapp.com",
+        projectId: "women-empwr",
+        appId: "1:230261281865:web:a5ad656bd1de125eafdb98"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+  </body>
+</html>

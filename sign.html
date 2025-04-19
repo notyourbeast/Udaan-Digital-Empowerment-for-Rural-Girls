@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup - Rural Girls Empowerment</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="/js/signup.js" defer></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #000, #1a1a1a);
+      color: white;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start">
+
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-3 bg-[#1A1A2D] shadow-md w-full">
+    <div class="flex items-center">
+      <img
+        src="/img/Udaan_logo__1_-removebg-preview.png"
+        alt="RuralGirls Logo"
+        class="h-24 w-auto hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+      />
+    </div>
+    <ul class="flex space-x-6 text-lg font-semibold text-purple-200">
+      <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+      <li><a href="login.html" class="hover:text-pink-400 transition">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Signup Card -->
+  <div class="flex flex-col items-center justify-center w-full h-full px-4 mt-10 mb-10">
+    <div class="glass p-8 rounded-xl w-full max-w-md space-y-6">
+      <h2 class="text-3xl font-extrabold text-center text-white">Sign Up</h2>
+
+      <!-- Select Signup Type -->
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-white">Select Signup Type</label>
+        <select id="signupType" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500">
+          <option value="parent">Parent Signup</option>
+          <option value="user">User Signup</option>
+        </select>
+      </div>
+
+      <!-- Parent Signup Form -->
+      <form id="parentForm" class="signupForm space-y-4">
+        <input type="hidden" value="parent" />
+
+        <input type="text" id="parentName" placeholder="Name" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="email" id="parentEmail" placeholder="Email" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="password" id="parentPassword" placeholder="Password" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="password" id="parentConfirmPassword" placeholder="Confirm Password" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="number" id="parentAge" placeholder="Age" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+
+        <select id="parentRelation" class="w-full p-3 rounded-lg bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+          <option>Mother</option>
+          <option>Father</option>
+          <option>Guardian</option>
+        </select>
+
+        <select id="parentPreference" class="w-full p-3 rounded-lg bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+          <option>Science and Technology</option>
+          <option>Arts</option>
+          <option>Commerce and Economics</option>
+          <option>More</option>
+        </select>
+
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold hover:opacity-90 transition">
+          Sign Up as Parent
+        </button>
+      </form>
+
+      <!-- User Signup Form -->
+      <form id="userForm" class="signupForm hidden space-y-4">
+        <input type="hidden" value="user" />
+
+        <input type="text" id="userName" placeholder="Name" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="email" id="userEmail" placeholder="Email" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="password" id="userPassword" placeholder="Password" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="password" id="userConfirmPassword" placeholder="Confirm Password" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+        <input type="number" id="userAge" placeholder="Age" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+
+        <select id="userPreference" class="w-full p-3 rounded-lg bg-white/10 text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+          <option>Science and Technology</option>
+          <option>Arts</option>
+          <option>Commerce and Economics</option>
+          <option>More</option>
+        </select>
+
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold hover:opacity-90 transition">
+          Sign Up as User
+        </button>
+      </form>
+
+      <p class="text-sm text-center text-purple-200">
+        Already have an account?
+        <a href="log.html" class="text-pink-400 hover:underline">Login here</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // signup-switch.js
+    document.addEventListener('DOMContentLoaded', () => {
+      const signupType = document.getElementById('signupType');
+      const parentForm = document.getElementById('parentForm');
+      const userForm = document.getElementById('userForm');
+
+      signupType.addEventListener('change', () => {
+        if (signupType.value === 'parent') {
+          parentForm.classList.remove('hidden');
+          userForm.classList.add('hidden');
+        } else {
+          userForm.classList.remove('hidden');
+          parentForm.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
